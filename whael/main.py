@@ -1,26 +1,24 @@
-import pygame as pg
-from Entity import randParticle
-class main:
-    def screen(self):
-        backgournd_colour = (0,0,0)
-        (width, height) = (600, 400)
+from pyglet.gl import *
+from Entity import Entity
 
-        screen = pg.display.set_mode((width,height))
-        clock = pg.time.Clock()
-        pg.display.set_caption('Whael')
-        screen.fill(backgournd_colour)
+class main(pyglet.window.Window):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
-        e = randParticle(150,50,15)
-        e.Particle(screen,width,height)
+    def on_draw(self):
+        window.clear()
+        glClear(pyglet.gl.GL_COLOR_BUFFER_BIT)
+        m.Display(600, 400)
 
-        running = True
-        while running:
-            for event in pg.event.get():
-                if event.type == pg.QUIT:
-                    running = False
-            e.Display(screen,width,height)
-            clock.tick(60)
-            pg.display.update()
-        pg.quit()
-m = main()
-m.screen()
+    def update(self,dt):
+        m.Display(600, 400)
+        print(pyglet.clock.get_fps())
+
+if __name__ == "__main__":
+    window = main(600,400, "whael",resizable= False)
+    m = Entity(150,0,15)
+    m.Particle(600,400)
+    pyglet.clock.schedule_interval(window.update,1/60.0)
+    pyglet.app.run()
+
+
