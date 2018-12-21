@@ -2,6 +2,7 @@ from pyglet.gl import *
 import math
 import random
 
+
 class Entity:
     def __init__(self,x,y,size):
         self.x = x
@@ -54,7 +55,7 @@ class Entity:
             mpt.bounce(width,height)
             for mpt2 in self.pt[i+1:]:
                 self.collide(mpt,mpt2)
-            mpt.DrawCircle(200)
+            mpt.DrawCircle(20)
 
     def collide(self,p1,p2):
         dx = p1.x - p2.x
@@ -75,18 +76,13 @@ class Entity:
     def bounce(self,width,height):
         if self.x > width - self.size:
             self.x = 2 * (width - self.size) - self.x
-
             self.angle = - self.angle
         elif self.x < self.size:
-
             self.x = 2*self.size - self.x
             self.angle =- self.angle
-
         if self.y > height - self.size:
-
             self.y =2*(height-self.size) - self.y
             self.angle = math.pi - self.angle
         elif self.y < self.size:
-
             self.y = 2 * self.size - self.y
             self.angle = math.pi - self.angle

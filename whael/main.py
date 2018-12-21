@@ -1,7 +1,9 @@
 from pyglet.gl import *
 from Entity import Entity
+from Clock import Time
 
-class main(pyglet.window.Window):
+
+class Main(pyglet.window.Window):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -12,13 +14,17 @@ class main(pyglet.window.Window):
 
     def update(self,dt):
         m.Display(600, 400)
-        print(pyglet.clock.get_fps())
+        t.print_time()
+
 
 if __name__ == "__main__":
-    window = main(600,400, "whael",resizable= False)
+    window = Main(600, 400, "whael", resizable= False)
     m = Entity(150,0,15)
     m.Particle(600,400)
+    t = Time()
     pyglet.clock.schedule_interval(window.update,1/60.0)
+    pyglet.clock.set_fps_limit(60)
+
     pyglet.app.run()
 
 

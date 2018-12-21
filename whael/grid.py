@@ -1,0 +1,1 @@
+#gid which will be the surface of the world ::25x25
