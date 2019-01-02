@@ -1,6 +1,5 @@
 #gid which will be the surface of the world ::25x25
 from pyglet.gl import *
-from array import array
 import numpy
 
 
@@ -9,46 +8,80 @@ class Grid:
     def __init__(self,width,height):
         self.width = width
         self.height = height
+        self.bool = True
 
     def CreateGrid(self):
         # this will be used to control the space
-        self.g = numpy.zeros(shape=(int(self.width/25),int(self.height/25)))
+        #dtype enables objects t be stored
 
+        self.g = numpy.zeros(shape=(int((self.width+25)/25),int((self.height+25)/25)), dtype=object)
+        #handles objects on the grid
+        self.gridw = numpy.zeros(shape=(int(self.width / 25), int(self.height / 25)), dtype=object)
     def initial_draw(self):
         self.CreateGrid()
         glBegin(GL_LINES)
         glColor3f(0, 50, 80)
         i = 0
         j = 25
+        y = 0
         #combined
         while i < 625:
+            x=0
             while j < 425:
                 #top
                 glVertex2i(i, j)
                 glVertex2i(j, j)
-                # bottom
+                #left
                 glVertex2i(i, 0)
                 glVertex2i(i, j)
                 if j < 400:
-                    #right
+                    #bottom
                     glVertex2i(i, j)
                     glVertex2i(j, j)
                 elif i < 600:
-                    # left
+                    # right
                     glVertex2i(i, 25)
                     glVertex2i(i, j)
+                self.g[y][x] = (i,j)
                 #add one square space to the numpy grid
-                numpy.insert(self.g, 1, [i, j])
+                #ignore the last column
+                x+=1
                 j += 25
             j = 25
             i += 25
+            y+=1
         glEnd()
+        #if self.bool == True:
+        #    print("hey")
+        #    print(self.g)
+        #    self.bool = False
+        #    print(self.g[5][5])
+        #    print(self.g[5][5][1])
 
-    #def update_grid(self,entity):
-        #check if the value exists in the numpy array
-        #if it does then redraw the square as stepped
-        #you'll then need to register as the particle's
-        #own private space
+    def update_grid(self,ptarr):
+        for i, mpt in enumerate(ptarr):
+            # probably replace with a macro instead
+            # 1-entity 2-water 3-dirt 4-stone
+            posy = int(mpt.x / 25)
+            posx = int(mpt.y / 25)
+            self.gridw[posy][posx] = 1
+            glBegin(GL_LINES)
+            glColor3f(0, 90, 0)
+            # top
+            glVertex2i(self.g[posy][posx][0], self.g[posy][posx][1])
+            glVertex2i(self.g[posy][posx][1], self.g[posy][posx][1])
+            # left
+            glVertex2i(self.g[posy][posx][0], 0)
+            glVertex2i(self.g[posy][posx][0], self.g[posy][posx][1])
+            if self.g[posy][posx][1] < 400:
+                # bottom
+                glVertex2i(self.g[posy][posx][0], self.g[posy][posx][1])
+                glVertex2i(self.g[posy][posx][1], self.g[posy][posx][1])
+            elif self.g[posy][posx][0] < 600:
+                # right
+                glVertex2i(self.g[posy][posx][0], 25)
+                glVertex2i(self.g[posy][posx][0], self.g[posy][posx][1])
+            glEnd()
 
     def print_grid(self):
         print(self.g)

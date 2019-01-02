@@ -1,5 +1,6 @@
 from pyglet.gl import *
 from Entity import Entity
+from CreateEntity import CreateEntity
 from Clock import Time
 from grid import Grid
 
@@ -13,12 +14,14 @@ class Main(pyglet.window.Window):
         window.clear()
         glClear(pyglet.gl.GL_COLOR_BUFFER_BIT)
         g.initial_draw()
-        m.Display(self.width, self.height)
+        m.Display(self.width, self.height,ptarr)
+        g.update_grid(ptarr)
 
 
     def update(self,dt):
         if t.time == True:
-            m.Display(self.width, self.height)
+            m.Display(self.width, self.height,ptarr)
+            g.update_grid(ptarr)
             t.print_time()
 
 
@@ -28,7 +31,8 @@ if __name__ == "__main__":
     height = 400
     window = Main(width,height,width, height, "whael", resizable= True)
     m = Entity(150,0,10)
-    m.Particle(width,height)
+    ce = CreateEntity()
+    ptarr = ce.Particle(width,height,20)
     t = Time()
     g = Grid(width,height)
 

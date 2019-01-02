@@ -1,5 +1,6 @@
 from pyglet.gl import *
 import math
+from grid import Grid
 import random
 
 
@@ -28,19 +29,6 @@ class Entity:
         glColor3f(255, 255, 255)
         self.circle.draw(GL_LINE_LOOP)
 
-    def Particle(self, width, height):
-        noPt = 20
-        pt =[]
-        for n in range(noPt):
-            self.size = random.randint(2,10)
-            x = random.randint(self.size,width - self.size)
-            y = random.randint(self.size, height - self.size)
-            part = Entity(x, y,self.size)
-            part.speed = random.random()
-            part.angle = random.uniform(0,math.pi*2)
-            pt.append(part)
-        self.pt = pt
-
     def Move(self):
         #gravity = (math.pi, 0.002)
         self.x += math.sin(self.angle) * self.speed
@@ -49,11 +37,11 @@ class Entity:
         # particle.speed = random.random()
         # particle.angle = random.un
 
-    def Display(self,width,height):
-        for i, mpt in enumerate(self.pt):
+    def Display(self,width,height,ptarr):
+        for i, mpt in enumerate(ptarr):
             mpt.Move()
             mpt.bounce(width,height)
-            for mpt2 in self.pt[i+1:]:
+            for mpt2 in ptarr[i+1:]:
                 self.collide(mpt,mpt2)
             mpt.DrawCircle(20)
 
