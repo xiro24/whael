@@ -25,14 +25,14 @@ class Entity:
         self.draw()
 
     def draw(self):
-        glColor3f(0, 0, 255)
+        glColor3f(255, 255, 255)
         self.circle.draw(GL_LINE_LOOP)
 
     def Particle(self, width, height):
         noPt = 20
         pt =[]
         for n in range(noPt):
-            self.size = random.randint(10,20)
+            self.size = random.randint(2,10)
             x = random.randint(self.size,width - self.size)
             y = random.randint(self.size, height - self.size)
             part = Entity(x, y,self.size)
