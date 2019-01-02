@@ -1,4 +1,3 @@
-import time as t
 
 class Time:
 
@@ -12,9 +11,11 @@ class Time:
         self.week = 7 * self.day
         self.month = 5 * self.week
         self.year = 12 * self.month
+        self.run = True
 
     def print_time(self):
         self.count += 1
-        if self.count % 28 == 0:
+        if self.count % 40 == 0:
             self.time+=1
             print(self.time)
+            self.count/=40

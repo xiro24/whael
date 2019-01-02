@@ -1,0 +1,118 @@
+
+        # top
+        i = 0
+        j = 25
+        while i < 625:
+            while j < 425:
+                # top
+                glVertex2i(i, j)
+                glVertex2i(j, j)
+                j += 25
+            j = 25
+            i += 25
+
+        #bottom
+        i = 0
+        j = 25
+        while i < 625:
+            while j < 400:
+                #bottom
+                glVertex2i(i, j)
+                glVertex2i(j, j)
+                j+=25
+            j=25
+            i+=25
+
+        #right
+        i = 0
+        j = 25
+        while i < 425:
+            while j < 625:
+                # right
+                glVertex2i(j, 25)
+                glVertex2i(j, i)
+                j += 25
+            j = 25
+            i += 25
+
+        #left
+        i = 0
+        j = 25
+        while i < 425:
+            while j < 600:
+                # right
+                glVertex2i(j, 25)
+                glVertex2i(j, i)
+                j += 25
+            j = 25
+            i += 25
+
+
+
+
+
+#        glVertex2i(0, 25)
+ #       glVertex2i(25, 25)
+#
+ #       glVertex2i(25, 25)
+  #      glVertex2i(25, 0)
+
+   #     glVertex2i(0, 0)
+    #    glVertex2i(25, 0)
+
+#        glVertex2i(0, 25)
+ #       glVertex2i(0, 0)
+
+#top
+        glVertex2i(0, 50)
+        glVertex2i(25, 50)
+
+        glVertex2i(25, 50)
+        glVertex2i(25, 25)
+
+        glVertex2i(0, 25)
+        glVertex2i(25, 25)
+
+        glVertex2i(0, 25)
+        glVertex2i(0, 25)
+
+
+#right
+ glVertex2i(25, 25)
+        glVertex2i(50, 25)
+
+        glVertex2i(50, 25)
+        glVertex2i(50, 0)
+
+        glVertex2i(25, 0)
+        glVertex2i(50, 0)
+
+        glVertex2i(25, 0)
+        glVertex2i(25, 25)
+
+
+
+#        glVertex2i(0, 25)
+ #       glVertex2i(25, 25)
+#
+ #       glVertex2i(25, 25)
+  #      glVertex2i(25, 0)
+
+   #     glVertex2i(0, 0)
+    #    glVertex2i(25, 0)
+
+#        glVertex2i(0, 25)
+ #       glVertex2i(0, 0)
+
+#top
+        glVertex2i(0, 50)
+        glVertex2i(25, 50)
+
+        glVertex2i(25, 50)
+        glVertex2i(25, 25)
+
+        glVertex2i(0, 25)
+        glVertex2i(25, 25)
+
+        glVertex2i(0, 25)
+        glVertex2i(0, 25)
