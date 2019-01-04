@@ -1,3 +1,54 @@
+            #2x3
+######################################
+            #right
+            glVertex2i(75, 25)
+            glVertex2i(75, 50)
+            # left
+            glVertex2i(50, 50)
+            glVertex2i(50, 25)
+            # bottom
+            glVertex2i(75, 25)
+            glVertex2i(50, 25)
+            # top
+            glVertex2i(75, 50)
+            glVertex2i(50, 50)
+######################################
+
+
+    def initial_draw(self):
+        self.CreateGrid()
+        glBegin(GL_LINES)
+        glColor3f(0, 50, 80)
+        i = 0
+        j = 25
+        y = 0
+        #combined
+        while i < 625:
+            x=0
+            while j < 425:
+                #top
+                glVertex2i(i, j)
+                glVertex2i(j, j)
+                #left
+                glVertex2i(i, 0)
+                glVertex2i(i, j)
+                if j < 400:
+                    #bottom
+                    glVertex2i(i, j)
+                    glVertex2i(j, j)
+                elif i < 600:
+                    # right
+                    glVertex2i(i, 25)
+                    glVertex2i(i, j)
+                self.g[y][x] = (i,j)
+                #add one square space to the numpy grid
+                #ignore the last column
+                x+=1
+                j += 25
+            j = 25
+            i += 25
+            y+=1
+        glEnd()
 [[1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 0.]
  [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 0.]
  [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 0.]

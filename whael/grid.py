@@ -73,15 +73,68 @@ class Grid:
             # left
             glVertex2i(self.g[posy][posx][0], 0)
             glVertex2i(self.g[posy][posx][0], self.g[posy][posx][1])
-            if self.g[posy][posx][1] < 400:
-                # bottom
-                glVertex2i(self.g[posy][posx][0], self.g[posy][posx][1])
-                glVertex2i(self.g[posy][posx][1], self.g[posy][posx][1])
-            elif self.g[posy][posx][0] < 600:
-                # right
-                glVertex2i(self.g[posy][posx][0], 25)
-                glVertex2i(self.g[posy][posx][0], self.g[posy][posx][1])
-            glEnd()
+            # bottom
+            glVertex2i(self.g[posy][posx][0], self.g[posy][posx][1])
+            glVertex2i(self.g[posy][posx][1], self.g[posy][posx][1])
+            # right
+            glVertex2i(self.g[posy][posx][0], 25)
+            glVertex2i(self.g[posy][posx][0], self.g[posy][posx][1])
+            #print(posy)
+            #print(posx)
+#####################################################################
+            # top
+            #glVertex2i(self.g[posy][posx][0], self.g[posy][posx][1])
+            #glVertex2i(self.g[posy][posx][1], self.g[posy][posx][1])
+            # left
+            #glVertex2i(self.g[posy][posx][0], 0)
+            #glVertex2i(self.g[posy][posx][0], self.g[posy][posx][1])
+            # bottom
+            #glVertex2i(self.g[posy][posx][0], self.g[posy][posx][1])
+            #glVertex2i(self.g[posy][posx][1], self.g[posy][posx][1])
+            # right
+            #glVertex2i(self.g[posy][posx][0], 25)
+            #glVertex2i(self.g[posy][posx][0], self.g[posy][posx][1])
 
+            #needs to be percise
+            #3x3
+######################################
+            #right
+            glVertex2i(75, 50)
+            glVertex2i(75, 75)
+                    #i=width #height+LENGTH OF WIRE
+            # left
+            glVertex2i(50, 50)
+            glVertex2i(50, 75)
+                # i=width #height+LENGTH OF WIRE
+            # bottom
+            glVertex2i(75, 50)
+            glVertex2i(50, 50)
+                # i=height+LENGTH OF WIRE #j=width
+            # top
+            glVertex2i(75, 75)
+            glVertex2i(50, 75)
+                    #i=height+LENGTH OF WIRE #j=width
+
+######################################
+            # 3x4
+            # right
+            glVertex2i(125, 50)
+            glVertex2i(125, 75)
+            # i=width/row #height+LENGTH OF WIRE
+            # left
+            glVertex2i(100, 50)
+            glVertex2i(100, 75)
+            # i=width/row #height+LENGTH OF WIRE
+            # bottom
+            glVertex2i(100, 50)
+            glVertex2i(125, 50)
+            # i=height+LENGTH OF WIRE #j=width
+            # top
+            glVertex2i(100, 75)
+            glVertex2i(125, 75)
+            # i=height+LENGTH OF WIRE #j=width
+            #i=translation to the right
+
+            glEnd()
     def print_grid(self):
         print(self.g)
