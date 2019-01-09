@@ -32,7 +32,7 @@ if __name__ == "__main__":
     window = Main(width,height,width, height, "whael", resizable= True)
     m = Entity(150,0,10)
     ce = CreateEntity()
-    ptarr = ce.Particle(width,height,1)
+    ptarr = ce.Particle(width,height,2)
     t = Time()
     g = Grid(width,height)
 
