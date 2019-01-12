@@ -4,6 +4,7 @@ from CreateEntity import CreateEntity
 from Clock import Time
 from grid import Grid
 
+
 class Main(pyglet.window.Window):
     def __init__(self,width,height, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -16,7 +17,6 @@ class Main(pyglet.window.Window):
         g.initial_draw()
         m.Display(self.width, self.height,ptarr)
         g.update_grid(ptarr)
-
 
     def update(self,dt):
         if t.time == True:
@@ -36,7 +36,8 @@ if __name__ == "__main__":
     t = Time()
     g = Grid(width,height)
     g.setup_map()
-    pyglet.clock.schedule_interval(window.update,1/60.0)
+
+    pyglet.clock.schedule_interval(window.update,1/60)
     pyglet.clock.set_fps_limit(60)
 
     pyglet.app.run()

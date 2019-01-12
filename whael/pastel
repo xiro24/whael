@@ -1,3 +1,42 @@
+          # 1x1
+                # right
+                glVertex2i(j + f, i + k)  # x
+                glVertex2i(j + f, j + k)  # y
+                # i=width/row #height+LENGTH OF WIRE
+                # left
+                glVertex2i(i + f, i + k)  # x
+                glVertex2i(i + f, j + k)  # y
+                # i=width/row #height+LENGTH OF WIRE
+                # bottom
+                glVertex2i(i + f, i + k)  # x
+                glVertex2i(j + f, i + k)  # y
+                # i=height+LENGTH OF WIRE #j=width
+                # top
+                glVertex2i(i + f, j + k)  # x
+                glVertex2i(j + f, j + k)  # y
+
+
+
+
+
+source: https://groups.google.com/forum/#!topic/pyglet-users/UYw2yHlBKDk
+Changing the sprite.color will tint the image, but of course it tints
+the entire image.  If your pieces are basically one color (like red
+piece, blue piece, etc) then if you make your source image greyscale
+or simply black, white, and transparent, then you can get nice
+different colored sprites (and greyscale) simply by manipulating the
+sprite.color.
+
+Also in the line of what Alex suggested, you can have a 'hilite'
+overlay sprite for the piece which you render on top of the sprite to
+indicate selection.  This could simply be a transparent outline, and
+again, you could render it in various tints.  And, if you want to
+modify the color of a piece without modifying certain parts of it, you
+could use a pair of sprites per piece - one containing the non-tinted
+overlay, and one containing the parts you wish to vary the tint.
+
+-price
+
 #####################################################################
             # top
             #glVertex2i(self.g[posy][posx][0], self.g[posy][posx][1])
