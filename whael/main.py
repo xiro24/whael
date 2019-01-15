@@ -11,18 +11,17 @@ class Main(pyglet.window.Window):
         self.width = width
         self.height = height
 
+#on_draw is not the initial draw it is in charge of drawing everything
     def on_draw(self):
-        window.clear()
-        glClear(pyglet.gl.GL_COLOR_BUFFER_BIT)
-        g.initial_draw()
-        m.Display(self.width, self.height,ptarr)
-        g.update_grid(ptarr)
-
-    def update(self,dt):
-        if t.time == True:
+        if t.run == True:
+            self.clear()
+            glClear(pyglet.gl.GL_COLOR_BUFFER_BIT)
+            g.batch_draw()
             m.Display(self.width, self.height,ptarr)
             g.update_grid(ptarr)
-            t.print_time()
+
+    def update(self,dt):
+        t.print_time()
 
 
 
@@ -36,6 +35,8 @@ if __name__ == "__main__":
     t = Time()
     g = Grid(width,height)
     g.setup_map()
+    g.initial_draw()
+    g.load_tiles()
 
     pyglet.clock.schedule_interval(window.update,1/60)
     pyglet.clock.set_fps_limit(60)

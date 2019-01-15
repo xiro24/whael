@@ -29,35 +29,15 @@ class Grid:
         j = self.offset
         f = 0
         y = 0
-        glBegin(GL_LINES)
-        glColor3f(0, 90, 80)
         while f < 600:
             k = 0
             x = 0
             while k < 400:
-                # 1x1
-                # right
-                glVertex2i(j + f, i + k)  # x
-                glVertex2i(j + f, j + k)  # y
-                # i=width/row #height+LENGTH OF WIRE
-                # left
-                glVertex2i(i + f, i + k)  # x
-                glVertex2i(i + f, j + k)  # y
-                # i=width/row #height+LENGTH OF WIRE
-                # bottom
-                glVertex2i(i + f, i + k)  # x
-                glVertex2i(j + f, i + k)  # y
-                # i=height+LENGTH OF WIRE #j=width
-                # top
-                glVertex2i(i + f, j + k)  # x
-                glVertex2i(j + f, j + k)  # y
-
                 self.g[y][x] = (i+f, j+f, i+k, j+k)
                 x+=1
                 k += self.offset
             f += self.offset
             y+=1
-        glEnd()
         self.load_map(self.currentMap)
 
     def update_grid(self,ptarr):
@@ -69,7 +49,6 @@ class Grid:
             posx = int(mpt.y / self.offset)
             self.gride[posy][posx] = "3"
             self.Draw(0,90,0,posy,posx)
-
             # you would probably need to give this a specific width x height from the entity
             if self.EntitySize > self.offset:
                 #additional sqaures
@@ -111,43 +90,37 @@ class Grid:
 
 #####################
 # OK THIS IS STUPID UR WASTING RESOURCES HERE
-#you should try resizing them
+                #try to separate it
     def load_tiles(self):
         img = self.u.load_image("assets/tex1.png")
-        batch = pyglet.graphics.Batch()
-        imgs = []
+        self.batch = pyglet.graphics.Batch()
+        self.imgs = []
         i=0
         while i < self.width:
             j=0
             while j < self.height:
                 #yo this is prone to duplication
-                p = self.u.place_image(img, i, j , batch)
+                self.p = self.u.place_image(img, i, j , self.batch)
                 if self.gridw[int((i/self.offset))][int((j/self.offset))] == "0":
-                    self.u.color(p, 0, 90, 90)
-                    imgs.append(p)
+                    self.u.color(self.p, 0, 90, 90)
+                    self.imgs.append(self.p)
                 elif self.gridw[int((i/self.offset))][int((j/self.offset))] == "1":
-                    self.u.color(p, 0, 120, 50)
-                    imgs.append(p)
+                    self.u.color(self.p, 0, 120, 50)
+                    self.imgs.append(self.p)
                 elif self.gridw[int((i / self.offset))][int((j / self.offset))] == "2":
-                    self.u.color(p, 255, 242, 46)
-                    imgs.append(p)
+                    self.u.color(self.p, 255, 242, 46)
+                    self.imgs.append(self.p)
                 j+=self.offset
             i+=self.offset
-        batch.draw()
+
+
+    def batch_draw(self):
+        self.batch.draw()
 
     def load_map(self,map):
-        self.load_tiles()
         for i in range(int(self.width / self.offset)):
             for j in range(int(self.height / self.offset)):
                 self.gridw[i][j] = map[i][j]
-        for i in range(int(self.width / self.offset)):
-            for j in range(int(self.height / self.offset)):
-                if self.gridw[i][j] == "0":
-                    self.Draw(0,80,90,i,j)
-                elif self.gridw[i][j] == "1":
-                    self.Draw(0,0.5,0,i,j)
-                elif self.gridw[i][j] == "2":
-                    self.Draw(1,1,0,i,j)
 
     def Draw(self,r,g,b,i,j):
         glBegin(GL_LINES)
