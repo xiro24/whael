@@ -23,8 +23,6 @@ class Main(pyglet.window.Window):
     def update(self,dt):
         t.print_time()
 
-
-
 if __name__ == "__main__":
     width = 600
     height = 400
