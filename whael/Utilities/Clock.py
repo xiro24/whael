@@ -14,8 +14,8 @@ class Time:
         self.run = True
 
     def print_time(self):
-        self.count += 1
-        if self.count % 40 == 0:
-            self.time+=1
-            print(self.time)
-            self.count/=40
+        self.time+=1
+        print(self.time)
+
+    def getTime(self):
+        return self.time

@@ -5,7 +5,7 @@ class Utilities:
         return pyglet.image.load(img)
 
     def place_image(self,img,x,y):
-        return pyglet.sprite.Sprite(img, x, y)
+        return pyglet.sprite.Sprite(img, x, y).position(1,1)
 
     def place_image(self,img,x,y,batch):
         return pyglet.sprite.Sprite(img, x, y,batch = batch)
