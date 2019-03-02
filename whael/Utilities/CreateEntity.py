@@ -1,5 +1,5 @@
 from pyglet.gl import *
-from Entity import Entity
+from whael.Entities.Entity import Entity
 import math
 import random
 

@@ -1,9 +1,8 @@
 from pyglet.gl import *
-from Entity import Entity
-from CreateEntity import CreateEntity
-from Clock import Time
-from grid import Grid
-
+from whael.Entities.Entity import Entity
+from whael.Utilities.CreateEntity import CreateEntity
+from whael.Utilities.Clock import Time
+from whael.world.grid import Grid
 
 class Main(pyglet.window.Window):
     def __init__(self,width,height, *args, **kwargs):

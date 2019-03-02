@@ -1,7 +1,7 @@
 #gid which will be the surface of the world ::25x25
 from pyglet.gl import *
-from Utilities import Utilities
-from Generate import Generate
+from whael.whael.Utilities.Utilities import Utilities
+from whael.whael.Elements.Generate import Generate
 import numpy
 #include air later
 class Grid:

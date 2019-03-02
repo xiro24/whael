@@ -1,0 +1,5 @@
+README.md
+whael.egg-info/PKG-INFO
+whael.egg-info/SOURCES.txt
+whael.egg-info/dependency_links.txt
+whael.egg-info/top_level.txt

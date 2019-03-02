@@ -1,8 +1,8 @@
 from pyglet.gl import *
 import math
-from grid import Grid
-from Terra import Terra
-from Aqua import Aqua
+from whael.world.grid import Grid
+from whael.Elements.Elementario.Terra import Terra
+from whael.Elements.Elementario.Aqua import Aqua
 import random
 
 

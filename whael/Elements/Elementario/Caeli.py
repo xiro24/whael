@@ -1,4 +1,4 @@
-from BaseElement import BaseElement
+from whael.Elements.Elementario.BaseElement import BaseElement
 
 class Caeli(BaseElement):
     def __init__(self):

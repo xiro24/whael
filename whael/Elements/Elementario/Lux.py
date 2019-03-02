@@ -1,4 +1,4 @@
-from BaseElement import BaseElement
+from whael.Elements.Elementario.BaseElement import BaseElement
 class Lux(BaseElement):
     def __init__(self):
         self.charge = 5 #also known for the mass

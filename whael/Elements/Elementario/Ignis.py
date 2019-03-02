@@ -1,4 +1,4 @@
-from BaseElement import BaseElement
+from whael.Elements.Elementario.BaseElement import BaseElement
 class Ignis(BaseElement):
     def __init__(self):
         self.density = (1.2/4.8)

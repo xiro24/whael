@@ -1,4 +1,4 @@
-from states import Gas, Liquid, Solid
+from whael.Elements.states import Gas, Liquid, Solid
 
 
 class Generate:

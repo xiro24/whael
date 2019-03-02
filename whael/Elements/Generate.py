@@ -1,12 +1,11 @@
 
-import Constant
-from Aqua import Aqua
-from Caeli import Caeli
-from Ignis import Ignis
-from Lux import Lux
-from Tenebris import Tenebris
-from Terra import Terra
-from Void import Void
+from whael.Elements.Elementario.Aqua import Aqua
+from whael.Elements.Elementario.Caeli import Caeli
+from whael.Elements.Elementario.Ignis import Ignis
+from whael.Elements.Elementario.Lux import Lux
+from whael.Elements.Elementario.Tenebris import Tenebris
+from whael.Elements.Elementario.Terra import Terra
+from whael.Elements.Elementario.Void import Void
 
 
 class Generate:
