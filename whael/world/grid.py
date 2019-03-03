@@ -1,7 +1,7 @@
 #gid which will be the surface of the world ::25x25
 from pyglet.gl import *
-from whael.whael.Utilities.Utilities import Utilities
-from whael.whael.Elements.Generate import Generate
+from whael.Utilities.Utilities import Utilities
+from whael.Elements.Generate import Generate
 import numpy
 #include air later
 class Grid:
@@ -126,15 +126,6 @@ class Grid:
                     self.imgs.append(self.p)
                 j+=self.offset
             i+=self.offset
-
-
-
-
-
-
-
-
-
 
 #perhaps try using a particle than just hovers over the map and it has a radius (only select the particles around it via the gridO system)
 
