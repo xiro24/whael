@@ -74,5 +74,6 @@ class Sun:
     def draw(self):
         glBindTexture(self.texture.target, self.texture.id)
         default_system.draw()
+        glLoadIdentity()
 
 

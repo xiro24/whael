@@ -29,7 +29,7 @@ from lepton.emitter import StaticEmitter
 from lepton.controller import Movement
 import whael.Utilities.Constant as CONST
 
-class Sun:
+class Moon:
 
     def initial(self):
 
@@ -58,21 +58,19 @@ class Sun:
         return default_system
 
     #i'll need a better system for this..
-    def drawSun(self,time,width,height):
+    def drawMoon(self,time,width,height):
         # adjust the time of the sun's translation here
 
         #implement delay for the moon
-        if (time % (height + 200)) != 0:
-            tempus = (time % (height + 200))
-        else:
-            tempus = 0
+
 
         # it would need to transverse within 15 minutes
-        glTranslatef(50 + tempus, tempus, 0)
+        glTranslatef(50, 0, 0)
         self.draw()
 
     def draw(self):
         glBindTexture(self.texture.target, self.texture.id)
         default_system.draw()
+        glLoadIdentity()
 
 

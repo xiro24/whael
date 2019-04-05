@@ -4,7 +4,7 @@ from whael.Utilities.CreateEntity import CreateEntity
 from whael.Utilities.Clock import Time
 from whael.world.grid import Grid
 from whael.Particles.Sun import Sun
-
+from whael.world.controller import controller
 
 
 class Main(pyglet.window.Window):
@@ -21,9 +21,7 @@ class Main(pyglet.window.Window):
             m.Display(self.width, self.height, ptarr, g.getMaps())
             g.update_grid(ptarr)
             #opengl
-            if t.getTime()%(height+(200)) < height:
-                s.drawSun(t.getTime(),width,height)
-                glLoadIdentity()
+            control.circadianRhythm(t.getTime(),width,height)
                 #reload the background after translation of opengl
 
     def update(self,dt):
@@ -44,10 +42,10 @@ if __name__ == "__main__":
     g.initial_draw()
     g.load_tiles()
 
-    s = Sun()
+    #create controller for weather
+    control = controller()
+    control.initializer()
 
-    s.initial()
-    s.sep()
     glEnable(GL_BLEND)
     glEnable(GL_POINT_SMOOTH)
     glEnable(GL_LIGHTING)
