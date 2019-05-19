@@ -1,5 +1,5 @@
 from pyglet.gl import *
-from whael.Entities.Entity import Entity
+from whael.Entity.BaseEntity import BaseEntity
 import math
 import random
 
@@ -14,7 +14,7 @@ class CreateEntity:
             y = random.randint(self.size, height - self.size)
             x= 400
             y= 200
-            part = Entity(x, y,self.size)
+            part = BaseEntity(x, y, self.size)
             part.speed = random.random()
             part.angle = random.uniform(0,math.pi*2)
             pt.append(part)

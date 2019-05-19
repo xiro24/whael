@@ -5,11 +5,7 @@ from whael.Elements.Elementario.Terra import Terra
 from whael.Elements.Elementario.Aqua import Aqua
 import random
 
-
-
-
-
-class Entity:
+class BaseEntity:
     def __init__(self,x,y,size):
         self.x = x
         self.y = y
@@ -32,7 +28,7 @@ class Entity:
         self.draw()
 
     def draw(self):
-        glColor3f(255, 255, 255)
+        #glColor3f(255, 255, 255)
         self.circle.draw(GL_LINE_LOOP)
 
     def Move(self,map):
