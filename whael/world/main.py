@@ -1,5 +1,5 @@
 from pyglet.gl import *
-from whael.Entities.Entity import Entity
+from whael.Entity.BaseEntity import BaseEntity
 from whael.Utilities.CreateEntity import CreateEntity
 from whael.Utilities.Clock import Time
 from whael.world.grid import Grid
@@ -26,7 +26,7 @@ if __name__ == "__main__":
     width = 600
     height = 400
     window = Main(width,height,width, height, "whael", resizable= True)
-    m = Entity(150,0,10)
+    m = BaseEntity(150, 0, 10)
     ce = CreateEntity()
     ptarr = ce.Particle(width,height,3)
     t = Time()
