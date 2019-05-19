@@ -137,8 +137,6 @@ class Grid:
     def batch_draw(self,time):
         #draw the original grid then the sun
         self.batch.draw()
-        img = self.u.load_image("assets/tex1.png")
-
 
     def load_map(self,map):
         for i in range(int(self.width / self.offset)):

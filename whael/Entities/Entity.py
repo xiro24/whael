@@ -44,9 +44,13 @@ class Entity:
         if isinstance(map[1][posy][posx],Terra):
             self.x += math.sin(self.angle) * self.speed+0.03
             self.y -= math.cos(self.angle) * self.speed+0.03
-
-        # particle.speed = random.random()
-        # particle.angle = random.un
+        else:
+            # check boundaries
+            # may want to chanage the if statement so entity will walk slower in sand
+            #or extremely slow in water / perhaps ahve a checker to check if has a swim trait etc.
+            self.angle = random.uniform(0, math.pi * 2)
+            self.x += math.sin(self.angle) * self.speed
+            self.y -= math.cos(self.angle) * self.speed
 
     #just focus on the AI movement later
     def Display(self,width,height,ptarr,map):
