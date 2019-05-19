@@ -6,6 +6,9 @@ from whael.Elements.Elementario.Aqua import Aqua
 import random
 
 
+
+
+
 class Entity:
     def __init__(self,x,y,size):
         self.x = x
@@ -17,6 +20,7 @@ class Entity:
         self.angle = 0
         self.elasticity = 0.75
 
+    #shold be drawing sprites
     def DrawCircle(self,numPoints):
         verts = []
         for i in range(numPoints):
