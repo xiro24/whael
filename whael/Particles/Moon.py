@@ -22,7 +22,7 @@ from pyglet.gl import *
 
 import os, math
 
-from lepton import Particle, ParticleGroup, default_system
+from lepton import Particle, ParticleGroup, ParticleSystem
 from lepton.renderer import BillboardRenderer
 from lepton.texturizer import SpriteTexturizer
 from lepton.emitter import StaticEmitter
@@ -32,6 +32,7 @@ import whael.Utilities.Constant as CONST
 class Moon:
 
     def initial(self):
+        self.p = ParticleSystem()
 
         self.texture = image.load('assets/flare3.png').get_texture()
         protons = ParticleGroup(renderer=BillboardRenderer(SpriteTexturizer(self.texture.id)),
@@ -47,30 +48,44 @@ class Moon:
             deviation=Particle(
                 rotation=(0, 0, math.pi / 10),
             ))
-
+        aura = ParticleGroup(renderer=BillboardRenderer(SpriteTexturizer(self.texture.id)),
+                             controllers=[
+                                 Movement(),
+                             ])
+        aura_emitter = StaticEmitter(template=Particle(size=(10, 10, 100), color=(0.4, 0.4, 0.4, 0.4), ),
+                                     size=[(1000, 1000, 1000)],
+                                     deviation=Particle(rotation=(0, 0,  math.pi / 10), ))
+        self.p.add_group(protons)
+        self.p.add_group(aura)
         proton_emitter.emit(1, protons)
-
+        aura_emitter.emit(1,aura)
 
     def sep(self):
-        pyglet.clock.schedule_interval(default_system.update, (1.0 / 30.0))
+        pyglet.clock.schedule_interval(self.p.update, (1.0 / 30.0))
 
     def getDefault(self):
-        return default_system
+        return self.p
 
     #i'll need a better system for this..
-    def drawMoon(self,time,width,height):
+    def drawMoon(self,time,width,height,offset):
         # adjust the time of the sun's translation here
 
         #implement delay for the moon
-
+        if offset != 0:
+            #this is where you can slow time
+            # what i am doing is gathering a percentage od the actual speed
+            tempus = 2*((offset - height))
+        else:
+            tempus = 0
 
         # it would need to transverse within 15 minutes
-        glTranslatef(50, 0, 0)
+        glTranslatef(50 + tempus, tempus, 0)
+
         self.draw()
 
     def draw(self):
         glBindTexture(self.texture.target, self.texture.id)
-        default_system.draw()
+        self.p.draw()
         glLoadIdentity()
 
 

@@ -51,16 +51,17 @@ if __name__ == "__main__":
     glEnable(GL_COLOR_MATERIAL)
     glShadeModel(GL_SMOOTH)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE)
-    glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
-    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+    glHint(GL_POINT_SMOOTH_HINT, GL_NICEST)
+    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST)
     glDisable(GL_DEPTH_TEST)
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
     glMatrixMode(GL_MODELVIEW)
     glLoadIdentity()
 
-    pyglet.clock.schedule_interval(window.update,1/60)
+    pyglet.clock.schedule_interval(window.update,0.1)
     pyglet.clock.set_fps_limit(60)
+
 
     pyglet.app.run()
 
