@@ -29,6 +29,10 @@ class Grid:
         maps = [self.gridw,self.gridO,self.gride,self.g]
         return maps
 
+    def getMapsDimensions(self):
+        dimensions = [int(self.width / self.offset), int(self.height / self.offset),self.offset]
+        return dimensions
+
     def initial_draw(self):
         i = 0
         j = self.offset
@@ -153,6 +157,7 @@ class Grid:
         glVertex2i(self.g[i][j][0], self.g[i][j][2])
         glVertex2i(self.g[i][j][0], self.g[i][j][3])
         # bottom
+
         glVertex2i(self.g[i][j][0], self.g[i][j][2])
         glVertex2i(self.g[i][j][1], self.g[i][j][2])
         # right

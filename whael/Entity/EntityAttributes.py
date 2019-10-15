@@ -23,7 +23,6 @@ class EntityAttributes:
 
     def GenerateAttributeValue(self, AttributeValue):
         printThis = random.randint(0, AttributeValue)
-        print("generate the random int:" + printThis)
         return printThis
 
     def DamageRecieved(self, DamageAmount):

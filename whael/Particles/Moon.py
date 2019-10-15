@@ -42,7 +42,7 @@ class Moon:
         proton_emitter = StaticEmitter(
             template=Particle(
                 size=(30, 30, 100),
-                color=(0.6,0.4, 0.2, 0.2),
+                color=(0.6,0.4, 0.2, 0),
             ),
             size=[(200, 200, 100)],
             deviation=Particle(

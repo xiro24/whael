@@ -1,11 +1,13 @@
 from pyglet.gl import *
 from whael.Entity.BaseEntity import BaseEntity
 from whael.Utilities.CreateEntity import CreateEntity
+from whael.Entity.Entities.Vir import Vir
 from whael.Utilities.Clock import Time
 from whael.world.grid import Grid
-from whael.Particles.Sun import Sun
+from whael.Entity.BaseVegetationEntity import BaseVegetationEntity
 from whael.world.controller import controller
-
+from whael.Entity.VegetationEntity.berry import berry
+from whael.world.acclimatize import acclimatize
 
 class Main(pyglet.window.Window):
     def __init__(self,width,height, *args, **kwargs):
@@ -18,27 +20,45 @@ class Main(pyglet.window.Window):
         if t.run == True:
             self.clear()
             g.batch_draw(t.getTime())
-            m.Display(self.width, self.height, ptarr, g.getMaps())
+            ce.Display(self.width, self.height, ptarr, g.getMaps())
             g.update_grid(ptarr)
+
+            #if t.getTime()%100 == 0:
+            cv.Display(self.width, self.height, pvege, g.getMaps())
+            g.update_grid(pvege)
             #opengl
             control.circadianRhythm(t.getTime(),width,height)
                 #reload the background after translation of opengl
 
     def update(self,dt):
+        t.tick()
         t.print_time()
+        wither.processTime(t,"temp")
+        wither.test(ptarr,pvege)
 
 if __name__ == "__main__":
     width = 600
     height = 400
+
+    #define Objects here:
     window = Main(width,height,width, height, "whael", resizable= True)
-    m = BaseEntity(150, 0, 10)
-    ce = CreateEntity()
-    ptarr = ce.Particle(width,height,3)
     t = Time()
+    wither = acclimatize()
     g = Grid(width,height)
     g.setup_map()
     g.initial_draw()
     g.load_tiles()
+
+    #entity creation
+    list_biodegradables = []
+    #m = BaseEntity(150, 0, 10)
+    #v = BaseVegetationEntity(100, 0, 10)
+    ce = Vir(width, height, 10, list_biodegradables)
+    cv = berry(width, height, 5, list_biodegradables)
+    ptarr = ce.createEntity(3, width, height, g.getMaps(), g.getMapsDimensions())
+    pvege = cv.createEntity(3, width, height, g.getMaps(), g.getMapsDimensions())
+
+
 
     #create controller for weather
     control = controller()
