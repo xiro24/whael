@@ -13,8 +13,10 @@ class Time:
         self.year = 12 * self.month
         self.run = True
 
+    def tick(self):
+        self.time += 1
+
     def print_time(self):
-        self.time+=1
         print(self.time)
 
     def getTime(self):

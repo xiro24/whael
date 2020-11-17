@@ -28,15 +28,19 @@ class BaseEntity:
         self.draw()
 
     def draw(self):
-        #glColor3f(255, 255, 255)
+        glColor3f(255, 255, 255)
         self.circle.draw(GL_LINE_LOOP)
 
     def Move(self, worldMap):
         #gravity = (math.pi, 0.002)
-        posy = int(self.x / 10)
-        posx = int(self.y / 10)
+        #posy = int(self.x / 10)
+        #posx = int(self.y / 10)
         #may need to check which angle it's facing and then use that as the sight
-        if isinstance(worldMap[1][posy][posx], Terra):
+        posx = int(self.x / 10)
+        posy = int(self.y / 10)
+
+        #may need to check which angle it's facing and then use that as the sight
+        if isinstance(worldMap[1][posx][posy],Terra):
             self.x += math.sin(self.angle) * self.speed+0.03
             self.y -= math.cos(self.angle) * self.speed+0.03
         else:

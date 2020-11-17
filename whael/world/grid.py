@@ -28,6 +28,10 @@ class Grid:
         worldMaps = [self.gridRawData, self.gridTilePlacement, self.gridContainingEntities, self.g]
         return worldMaps
 
+    def getMapsDimensions(self):
+        dimensions = [int(self.width / self.offset), int(self.height / self.offset),self.offset]
+        return dimensions
+
     def initial_draw(self):
         i = 0
         j = self.offset
@@ -47,7 +51,7 @@ class Grid:
 #here is where the entities are being tacked. You need to decoupe this method
 #so then te Entity class can use this to check their surroundings.
 # also make this more module.
-    def update_grid(self,ptarr):
+    def trackAllEntities(self, ptarr):
         for i, mpt in enumerate(ptarr):
             # probably replace with a macro instead
             # 1-entity 2-water 3-dirt 4-stone
@@ -144,6 +148,7 @@ class Grid:
         glVertex2i(self.g[i][j][0], self.g[i][j][2])
         glVertex2i(self.g[i][j][0], self.g[i][j][3])
         # bottom
+
         glVertex2i(self.g[i][j][0], self.g[i][j][2])
         glVertex2i(self.g[i][j][1], self.g[i][j][2])
         # right
@@ -151,5 +156,5 @@ class Grid:
         glVertex2i(self.g[i][j][1], self.g[i][j][3])
         glEnd()
 
-    def print_grid(self):
-        print(self.g)
+    #def print_grid(self):
+    #    print(self.g)
