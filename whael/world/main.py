@@ -16,7 +16,7 @@ class Main(pyglet.window.Window):
             self.clear()
             glClear(pyglet.gl.GL_COLOR_BUFFER_BIT)
             g.batch_draw(t.getTime())
-            m.Display(self.width, self.height,ptarr,g.getMaps())
+            m.Display(self.width, self.height, ptarr, g.getWorldMaps())
             g.update_grid(ptarr)
 
     def update(self,dt):
@@ -36,7 +36,7 @@ if __name__ == "__main__":
     g.load_tiles()
 
     pyglet.clock.schedule_interval(window.update,1/60)
-    pyglet.clock.set_fps_limit(60)
+    #pyglet.clock.set_fps_limit(60)
 
     pyglet.app.run()
 

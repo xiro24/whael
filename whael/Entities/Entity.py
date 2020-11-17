@@ -31,13 +31,12 @@ class Entity:
         glColor3f(255, 255, 255)
         self.circle.draw(GL_LINE_LOOP)
 
-    def Move(self,map):
+    def Move(self, worldMap):
         #gravity = (math.pi, 0.002)
         posy = int(self.x / 10)
         posx = int(self.y / 10)
-
         #may need to check which angle it's facing and then use that as the sight
-        if isinstance(map[1][posy][posx],Terra):
+        if isinstance(worldMap[1][posy][posx], Terra):
             self.x += math.sin(self.angle) * self.speed+0.03
             self.y -= math.cos(self.angle) * self.speed+0.03
 
@@ -45,16 +44,16 @@ class Entity:
         # particle.angle = random.un
 
     #just focus on the AI movement later
-    def Display(self,width,height,ptarr,map):
+    def Display(self, width, height, ptarr, worldMap):
         for i, mpt in enumerate(ptarr):
-            mpt.Move(map)
-            #mpt.bounce(map)
+            mpt.Move(worldMap)
+            mpt.bounce(worldMap)
             for mpt2 in ptarr[i+1:]:
                 self.collide(mpt,mpt2)
             mpt.DrawCircle(20)
 
-    def set_map(self,map):
-        self.map = map[0]
+    def set_map(self,worldMap):
+        self.worldMap = worldMap[0]
 
     def collide(self,p1,p2):
         dx = p1.x - p2.x
@@ -72,15 +71,14 @@ class Entity:
             p2.x -= math.sin(angle)
             p2.y += math.cos(angle)
 
-    def bounce(self,map):
+    def bounce(self,worldMap):
         posy = int(self.x / 10)
         posx = int(self.y / 10)
         if posy > 60:
             posy = 59
         elif posx > 40:
             posx = 39
-        aa=0
-        while map[posy][posx] == "0":
+        while worldMap[0][posy][posx] == "0":
             self.angle = random.uniform(0,math.pi*2)
             self.x += math.sin(self.angle) * self.speed
             self.y -= math.cos(self.angle) * self.speed
@@ -94,21 +92,13 @@ class Entity:
                 self.x = tempx
             posy = int(self.x / 10)
             posx = int(self.y / 10)
-            print("x2:", posy)
-            print("y2:", posx)
             if posy > 59:
                 posy=59
             if posx > 39:
                 posx = 39
-            print("xv:", posy)
-            print("yv:", posx)
-            print("temp:",aa)
-
-
-
 
                 #don't really need boucne anymore
-    def bouncey(self,width,height,map):
+    def bouncey(self,width,height,worldMap):
         if self.x > width - self.size:
             self.x = 2 * (width - self.size) - self.x
             self.angle = - self.angle

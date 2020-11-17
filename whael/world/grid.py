@@ -17,17 +17,16 @@ class Grid:
         #dtype enables objects t be stored
 
         self.g = numpy.zeros(shape=(int((self.width+self.offset)/self.offset),int((self.height+self.offset)/self.offset)), dtype=object)
+        #Raw data map
+        self.gridRawData = numpy.zeros(shape=(int(self.width / self.offset), int(self.height / self.offset)), dtype=object)
         #handles tile placement
-        self.gridw = numpy.zeros(shape=(int(self.width / self.offset), int(self.height / self.offset)), dtype=object)
-        #replace this one with gridw
-        self.gridO = numpy.zeros(shape=(int(self.width / self.offset), int(self.height / self.offset)), dtype=object)
-        #self.create_map()
+        self.gridTilePlacement = numpy.zeros(shape=(int(self.width / self.offset), int(self.height / self.offset)), dtype=object)
         #this grid is in charge of entity placement
-        self.gride = numpy.zeros(shape=(int(self.width / self.offset), int(self.height / self.offset)), dtype=object)
+        self.gridContainingEntities = numpy.zeros(shape=(int(self.width / self.offset), int(self.height / self.offset)), dtype=object)
 
-    def getMaps(self):
-        maps = [self.gridw,self.gridO,self.gride,self.g]
-        return maps
+    def getWorldMaps(self):
+        worldMaps = [self.gridRawData, self.gridTilePlacement, self.gridContainingEntities, self.g]
+        return worldMaps
 
     def initial_draw(self):
         i = 0
@@ -43,7 +42,7 @@ class Grid:
                 k += self.offset
             f += self.offset
             y+=1
-        self.load_map(self.gridw)
+        self.load_map(self.gridTilePlacement)
 
     def update_grid(self,ptarr):
 
@@ -52,7 +51,7 @@ class Grid:
             # 1-entity 2-water 3-dirt 4-stone
             posy = int(mpt.x / self.offset)
             posx = int(mpt.y / self.offset)
-            self.gride[posy][posx] = "3"
+            self.gridContainingEntities[posy][posx] = "3"
             self.Draw(0,90,0,posy,posx)
             # you would probably need to give this a specific width x height from the entity
             if self.EntitySize > self.offset:
@@ -90,12 +89,9 @@ class Grid:
                     j+=1
                     i=0
                 else:
-                    self.gridw[i][j] = c
+                    self.gridRawData[i][j] = c
                     i += 1
 
-#####################
-# OK THIS IS STUPID UR WASTING RESOURCES HERE
-                #try to separate it
     def load_tiles(self):
         img = self.u.load_image("assets/tex1.png")
         self.batch = pyglet.graphics.Batch()
@@ -104,157 +100,36 @@ class Grid:
         while i < self.width:
             j=0
             while j < self.height:
-                #yo this is prone to duplication
                 self.p = self.u.place_image(img, i, j , self.batch)
-                if self.gridw[int((i/self.offset))][int((j/self.offset))] == "0": #sea
+                if self.gridRawData[int((i / self.offset))][int((j / self.offset))] == "0": #sea
                     self.u.color(self.p, 0, 90, 170)
                     #have a random generator to determine concentration of resource (fish schools)
-                    self.gridO[int((i/self.offset))][int((j/self.offset))] = Generate().ConjureAqua()
-                    self.gridO[int((i / self.offset))][int((j / self.offset))].setLightIntensity(0,90,170)
+                    self.gridTilePlacement[int((i / self.offset))][int((j / self.offset))] = Generate().ConjureAqua()
+                    self.gridTilePlacement[int((i / self.offset))][int((j / self.offset))].setLightIntensity(0, 90, 170)
                     self.imgs.append(self.p)
-                elif self.gridw[int((i/self.offset))][int((j/self.offset))] == "1": #ground
+                elif self.gridRawData[int((i / self.offset))][int((j / self.offset))] == "1": #ground
                     self.u.color(self.p, 0, 120, 50)
                     # have a random generator to determine concentration of resource (crops/food)
                     # following certain conditions such as range from water add - sunlight later
-                    self.gridO[int((i/self.offset))][int((j/self.offset))] = Generate().ConjureTerra()
-                    self.gridO[int((i / self.offset))][int((j / self.offset))].setLightIntensity(0, 120, 50)
+                    self.gridTilePlacement[int((i / self.offset))][int((j / self.offset))] = Generate().ConjureTerra()
+                    self.gridTilePlacement[int((i / self.offset))][int((j / self.offset))].setLightIntensity(0, 120, 50)
                     self.imgs.append(self.p)
-                elif self.gridw[int((i / self.offset))][int((j / self.offset))] == "2": #sand
+                elif self.gridRawData[int((i / self.offset))][int((j / self.offset))] == "2": #sand
                     self.u.color(self.p, 255, 200, 46)
-                    self.gridO[int((i/self.offset))][int((j/self.offset))] = Generate().ConjureTerra()
-                    self.gridO[int((i / self.offset))][int((j / self.offset))].setLightIntensity(255, 200, 46)
+                    self.gridTilePlacement[int((i / self.offset))][int((j / self.offset))] = Generate().ConjureTerra()
+                    self.gridTilePlacement[int((i / self.offset))][int((j / self.offset))].setLightIntensity(255, 200, 46)
                     self.imgs.append(self.p)
                 j+=self.offset
             i+=self.offset
 
-#perhaps try using a particle than just hovers over the map and it has a radius (only select the particles around it via the gridO system)
-
-
-    #a time parameter is required
+#Draw everything in batch
     def batch_draw(self,time):
-        #draw the original grid then the sun
         self.batch.draw()
-        sunBatch = pyglet.graphics.Batch()
-        img = self.u.load_image("assets/tex1.png")
-        #not that happy with the sun maybe fix later..
-        x = 0
-        #there might be a potential overlap here
-        sunpos = 150
-        colorAdjust = 0
-        imgss =[]
-        radius =100
-        i=0
-        stretch = 100
-        j=0
-        d=0
-        while d < 200:
-            x=0
-            stretch-=d
-            while x <= stretch:
-                # controls the width of the sun it's position moving accross the board
-                # use the grido
-                # you must consider all angles
-                # radius also means width
-                for j in range(radius-d):
-                    if int(int(j + time) / self.offset) >= 0 and int(int(j + time) / self.offset) < 60:
-                        # top right side
-                        grido = self.gridO[int(int(j + time) / self.offset)][int(int(sunpos + x) / self.offset)]
-                        p = self.u.place_image(img, int(j + time), int(sunpos + x), sunBatch)
-                        self.u.color(p, grido.getLightIntensity()[0] + int(d), grido.getLightIntensity()[1],
-                                     grido.getLightIntensity()[2])
-                        grido.setLightIntensity(grido.getLightIntensity()[0] + int(d),
-                                                grido.getLightIntensity()[1], grido.getLightIntensity()[2])
-                        # edit colour here
-                        imgss.append(p)
-
-                        grido = self.gridO[int(int(j + time) / self.offset)][int(int(sunpos - x) / self.offset)]
-                        p = self.u.place_image(img, int(j + time), int(sunpos - x), sunBatch)
-                        self.u.color(p, grido.getLightIntensity()[0] + int(d), grido.getLightIntensity()[1],
-                                     grido.getLightIntensity()[2])
-                        grido.setLightIntensity(grido.getLightIntensity()[0] + int(d),
-                                                grido.getLightIntensity()[1], grido.getLightIntensity()[2])
-                        # edit colour here
-                        imgss.append(p)
-                x += 10
-            d+=20
-        sunBatch.draw()
-
-#just use images
-
-#make a square instead!!!!!!!!!!!!!!!!!!
-
-    def drawSun(self,lineX,lineY,time,sunpos,sunBatch,img):
-        #for this you can just shorten it here
-        x = lineX
-        y = lineY
-        colorAdjust = 0
-        switchColor = False
-        initialColor =10
-        j= lineX
-        while j < lineY:
-            self.drawSunTile(int(j + time), sunpos-15, sunBatch, img, self.gridw, self.u, self.imgs, colorAdjust,switchColor,initialColor/255)
-            if colorAdjust <= int(y / 2) - 30:
-                initialColor += colorAdjust
-                colorAdjust += 10
-            elif switchColor == False:
-                switchColor = True
-                colorAdjust = 0
-            if switchColor == True:
-                initialColor -= colorAdjust
-                colorAdjust += 10
-            j += self.offset
-        colorAdjust = 0
-        initialColor=10
-        switchColor = False
-        i = y
-        while i > int(lineX):
-            self.drawSunTile(int(i + time - 10), sunpos-int(x*2)+15, sunBatch, img, self.gridw, self.u, self.imgs,colorAdjust,switchColor,initialColor/255)
-            if colorAdjust <= int(y/2)-30:
-                initialColor += colorAdjust
-                colorAdjust += 10
-            elif switchColor == False:
-                switchColor = True
-                colorAdjust = 0
-            if switchColor == True:
-                initialColor -= colorAdjust
-                print(initialColor)
-                colorAdjust += 10
-            i -= self.offset
-
-#the color keeps resetting
-    def drawSunTile(self,sunoffsetX,sunpos,sunBatch,img,grid,util,images,colorAdjust,switchColor,initialColor):
-        p = util.place_image(img,sunoffsetX,sunpos,sunBatch)
-        if sunoffsetX > 0 and int((sunoffsetX / self.offset)) < 60:
-            if grid[int((sunoffsetX / self.offset))][int((sunpos / self.offset))] == "0":  # sea
-                if switchColor == False:
-                    initialColor +=colorAdjust
-                    util.color(p, initialColor, 20, 60)
-                else:
-                    #keeps giving me a zero
-                    initialColor -= colorAdjust
-                    util.color(p, initialColor, 20, 60)
-                images.append(p)
-            elif grid[int((sunoffsetX / self.offset))][int((sunpos / self.offset))] == "1":  # ground
-                if switchColor == False:
-                    initialColor += colorAdjust
-                    util.color(p, initialColor, 112, 147)
-                else:
-                    initialColor -= colorAdjust
-                    util.color(p, initialColor, 112, 147)
-                images.append(p)
-            elif grid[int((sunoffsetX / self.offset))][int((sunpos / self.offset))] == "2":  # sand
-                if switchColor == False:
-                    initialColor += colorAdjust
-                    util.color(p, initialColor, 69, 0)
-                else:
-                    initialColor -= colorAdjust
-                    util.color(p, initialColor, 69, 0)
-                images.append(p)
 
     def load_map(self,map):
         for i in range(int(self.width / self.offset)):
             for j in range(int(self.height / self.offset)):
-                self.gridw[i][j] = map[i][j]
+                self.gridTilePlacement[i][j] = map[i][j]
 
     def Draw(self,r,g,b,i,j):
         glBegin(GL_LINES)

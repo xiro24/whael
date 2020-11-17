@@ -10,6 +10,5 @@ class Utilities:
     def place_image(self,img,x,y,batch):
         return pyglet.sprite.Sprite(img, x, y,batch = batch)
 
-
     def color(self,sprite,x,y,z):
         sprite.color = (x,y,z)
