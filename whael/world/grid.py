@@ -44,15 +44,17 @@ class Grid:
             y+=1
         self.load_map(self.gridTilePlacement)
 
+#here is where the entities are being tacked. You need to decoupe this method
+#so then te Entity class can use this to check their surroundings.
+# also make this more module.
     def update_grid(self,ptarr):
-
         for i, mpt in enumerate(ptarr):
             # probably replace with a macro instead
             # 1-entity 2-water 3-dirt 4-stone
             posy = int(mpt.x / self.offset)
             posx = int(mpt.y / self.offset)
             self.gridContainingEntities[posy][posx] = "3"
-            self.Draw(0,90,0,posy,posx)
+            self.EntityTracking(0, 90, 0, posy, posx)
             # you would probably need to give this a specific width x height from the entity
             if self.EntitySize > self.offset:
                 #additional sqaures
@@ -64,7 +66,8 @@ class Grid:
                     #out of bounds check required
                     for i in range(width):
                         for j in range(height):
-                            self.Draw(0,90,0(posy+j),(posx+i))
+                            self.EntityTracking(0, 90, (posy + j), (posx + i))
+
     def create_map(self):
         file = open("mapv1","w")
         for j in range(int(self.height / self.offset)):
@@ -131,7 +134,7 @@ class Grid:
             for j in range(int(self.height / self.offset)):
                 self.gridTilePlacement[i][j] = map[i][j]
 
-    def Draw(self,r,g,b,i,j):
+    def EntityTracking(self, r, g, b, i, j):
         glBegin(GL_LINES)
         glColor3f(r, g, b)
         # top
