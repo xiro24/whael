@@ -15,8 +15,8 @@ class acclimatize:
             #if isinstance(entity, Vir):
             #    print("wa")
             #check lifespan
-            if entity.lifespan > 0:
-                entity.witherRate()
+            if entity.numeralAttributeDict.get("Age") != entity.lifespan:
+                entity.perform_base_needs()
                 updated_entities.append(entity)
 
         print("len of entities",len(updated_entities))

@@ -11,14 +11,14 @@ class berry(BaseVegetationEntity):
         super().__init__(x, y, size)
         self.entityScale = 5
         self.food = "berries"
-        self.lifespan = 6
+        self.lifespan = 200
         self.numeralAttributeDict = {"durability": 0,
                                     "nutrition": 0,
                                     "Age": 0}
         self.AttributeDict = {"condition": ""}
 
         self.tempfix = list_biodegradables
-        self.Attribute = ""
+        self.Attribute = EntityAttributes(self)
 
     ############################Entity Based time needs to be moved to acclimatize#############################
         #there is a bit of code duplication, refactoring should be considered
@@ -44,13 +44,18 @@ class berry(BaseVegetationEntity):
             self.entityList.append(entity)
         return self.entityList
 
+
+    def perform_base_needs(self):
+        #wither function
+        self.witherRate()
+        #feed_function
+        #sleep_function
+        #breed_function
+
     # changes the advances the age
     def witherRate(self):
-        self.Attribute = EntityAttributes(self)
-        time = Time()
-        if time.getTime() % time.day == 0 and self.numeralAttributeDict.get("Age") != self.lifespan:
+        if self.numeralAttributeDict.get("Age") != self.lifespan:
             self.numeralAttributeDict.update({"Age": self.numeralAttributeDict.get("Age") + 1})
-            self.lifespan -= 1
             # updates the stats at a certain peak age
             self.Attribute.GrowthStatus(self.numeralAttributeDict.get("Age"))
     ############################Entity Based time needs to be moved to acclimatize#############################

@@ -32,24 +32,12 @@ class EntityAttributes:
         # ensure you've accounted for bonuses here..
         # you would probably need a action checker to check what the activity is
         for i in self.entityNumAttr:
-            # basically this will increase the percentage that's the entity will have as it grows
             if i == "Age":
-                if 40 >= self.entityNumAttr.get("Age") > 0:
-                    self.entityNumAttr.update({i: ((Age + self.entityNumAttr.get(i)) / self.entityNumAttr.get(i))})
-                else:
-                    # ages them to detorioate
-                    self.entityNumAttr.update({i: ((Age + self.entityNumAttr.get(i)) / self.entityNumAttr.get(i)) - (
-                                self.entityNumAttr.get(i) / Age)})
-
-        # this method requires access to the time class
-
-    def AgingStatus(self):
-        # this method should call the time command from since birth t keep track of age.
-        print("temp")
-
-    # create getters/setters?
-    # create randomizers here in this class and set them
-    # this class will also be responsible for the status effects when the entity gets inflicted with damage
+                self.entityNumAttr.update({i: (Age + 1)})
+                #else:
+                    # ages them to deterioate
+                #    self.entityNumAttr.update({i: ((Age + self.entityNumAttr.get(i)) / self.entityNumAttr.get(i)) - (
+                #                self.entityNumAttr.get(i) / Age)})
 
 #######################################################################
 

@@ -14,7 +14,7 @@ class Vir(BaseEntity):
         self.entityScale = size
         self.food = "berries"
         #self.lifespan=27375
-        self.lifespan = 27
+        self.lifespan = 100
         self.numeralAttributeDict = {"durability": 0,
                                      "strength": 0,
                                      "dexterity": 0,
@@ -24,7 +24,7 @@ class Vir(BaseEntity):
         self.AttributeDict = {"condition": "", "mind": ""}
 
         self.tempfix = list_biodegradables
-        self.Attribute = ""
+        self.Attribute = EntityAttributes(self)
 
     ############################Entity Based time needs to be moved to acclimatize#############################
     #x and y are the starting coordinates
@@ -50,16 +50,29 @@ class Vir(BaseEntity):
 
     #changes the advances the age
     def witherRate(self):
-        self.Attribute = EntityAttributes(self)
-        time = Time()
-        if time.getTime()%time.day==0 and self.numeralAttributeDict.get("Age")!=self.lifespan:
+        if self.numeralAttributeDict.get("Age")!= self.lifespan:
             self.numeralAttributeDict.update({"Age": self.numeralAttributeDict.get("Age")+1})
-            self.lifespan -= 1
             # updates the stats at a certain peak age
             self.Attribute.GrowthStatus(self.numeralAttributeDict.get("Age"))
 
     #########################################################################################################
 
+    def perform_base_needs(self):
+        #wither function
+        self.witherRate()
+        #feed_function
+        #sleep_function
+        #breed_function
+        self.breed()
+
+
+    def breed(self):
+        maturity = int(0.3*self.lifespan)
+        if self.numeralAttributeDict.get("Age") >= maturity:
+            print("breeding?")
+            # 1. check if there is 1:1 for each food
+
+            #think
 
 
 
